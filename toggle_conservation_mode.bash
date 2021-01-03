@@ -4,6 +4,12 @@ status=`cat /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode`
 if [[ $status == 1 ]]
 then 
 	echo "conservation mode is on"
+
+	if [ "$EUID" -ne 0 ]
+  		then echo "Please run as root to toggle conservation mode on/off"
+  		exit
+	fi
+
 	
 	read -p "Do you want to turn it off y/n : " inp
 
@@ -23,6 +29,12 @@ elif [[ $status == 0 ]]
 then
 	echo "conservation mode is off"
         
+	if [ "$EUID" -ne 0 ]
+  		then echo "Please run as root to toggle conservation mode on/off"
+  		exit
+	fi
+
+
         read -p "Do you want to turn it on y/n : " inp
         
 	if [[ $inp == 'y' ]] || [[ $inp == 'Y' ]]
